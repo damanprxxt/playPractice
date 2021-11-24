@@ -1,6 +1,14 @@
 package controllers;
+import helper.*;
+import play.mvc.*;
+import javax.inject.Inject;
 
 import play.mvc.*;
+import play.libs.ws.*;
+import java.util.concurrent.CompletionStage;
+import com.fasterxml.jackson.databind.JsonNode;
+import play.libs.Json;
+import helper.*;
 
 /**
  * This controller contains an action to handle HTTP requests
@@ -24,6 +32,15 @@ public class HomeController extends Controller {
     
     public Result tutorial() {
         return ok(views.html.tutorial.render());
+    }
+
+
+
+    public CompletionStage<Result> topicsInfo(String topic){
+        CompletableFuture<JsonNode> tInfo = helper.topicInfoRequest(topic);
+
+        return ok(views.html.topicsInfo.Render(tInfo));
+
     }
 
 }
